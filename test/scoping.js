@@ -19,6 +19,19 @@ describe('scoping', function () {
       return request(this.method);
     };
 
-    expect(mod.req()).toBe('bar');
+    expect(mod.req()).toBe('scoping');
+    
+    var otherArgs = [];
+  for(var i = 1; i < arguments.length; i++){ 
+    otherArgs.push(arguments[i]);
+  }
+   return function(e) {
+   
+    otherArgs.push(e || window.event);
+   
+    otherArgs.reverse();
+    callingFunction.apply(scope, otherArgs);
+
   });
 });
+
